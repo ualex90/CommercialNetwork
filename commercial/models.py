@@ -41,7 +41,7 @@ class BaseModel(models.Model):
     """ Базовая модель """
     name = models.CharField(max_length=300, verbose_name=_("Name"))
     contacts = models.ForeignKey(Contacts, **NULLABLE, on_delete=models.CASCADE, verbose_name=_("Contacts"))
-    arrears = models.DecimalField(**NULLABLE, max_digits=12, max_length=2, verbose_name=_("Arrears"))
+    arrears = models.DecimalField(**NULLABLE, max_digits=12, decimal_places=2, verbose_name=_("Arrears"))
     creation_time = models.DateTimeField(auto_now_add=True, verbose_name=_("Creation Time"))
 
     def __str__(self):
@@ -53,7 +53,7 @@ class Provider(BaseModel):
     provider_type = models.CharField(max_length=2, choices=PROVIDER_TYPE_CHOICES, verbose_name=_("Provider Type"))
     products = models.ManyToManyField(Product, verbose_name=_("Products"))
     provider = models.ManyToManyField(
-        'self', **NULLABLE, related_name='customer', verbose_name=_("Provider")
+        'self', verbose_name=_("Provider")
     )
 
     class Meta:
@@ -64,7 +64,7 @@ class Provider(BaseModel):
 class RetailNetwork(BaseModel):
     """ Розничная сеть """
     provider = models.ManyToManyField(
-        Provider, **NULLABLE, related_name='customer', verbose_name=_("Provider")
+        Provider, related_name='customer', verbose_name=_("Provider")
     )
 
     class Meta:
