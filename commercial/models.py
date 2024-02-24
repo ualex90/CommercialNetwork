@@ -53,7 +53,7 @@ class Provider(BaseModel):
     provider_type = models.CharField(max_length=2, choices=PROVIDER_TYPE_CHOICES, verbose_name=_("Provider Type"))
     products = models.ManyToManyField(Product, verbose_name=_("Products"))
     provider = models.ManyToManyField(
-        'self', **NULLABLE, on_delete=models.CASCADE, related_name='customer', verbose_name=_("Provider")
+        'self', **NULLABLE, related_name='customer', verbose_name=_("Provider")
     )
 
     class Meta:
@@ -64,7 +64,7 @@ class Provider(BaseModel):
 class RetailNetwork(BaseModel):
     """ Розничная сеть """
     provider = models.ManyToManyField(
-        Provider, **NULLABLE, on_delete=models.CASCADE, related_name='customer', verbose_name=_("Provider")
+        Provider, **NULLABLE, related_name='customer', verbose_name=_("Provider")
     )
 
     class Meta:
