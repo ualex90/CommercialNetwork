@@ -10,6 +10,13 @@ class Product(models.Model):
     model = models.CharField(max_length=300, verbose_name=_("Model"))
     release_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Release Date"))
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
+
 
 class Contacts(models.Model):
     """ Контакты """
@@ -37,6 +44,9 @@ class BaseModel(models.Model):
     arrears = models.DecimalField(**NULLABLE, max_digits=12, max_length=2, verbose_name=_("Arrears"))
     creation_time = models.DateTimeField(auto_now_add=True, verbose_name=_("Creation Time"))
 
+    def __str__(self):
+        return self.name
+
 
 class Provider(BaseModel):
     """ Поставщик """
@@ -46,9 +56,17 @@ class Provider(BaseModel):
         'self', **NULLABLE, on_delete=models.CASCADE, related_name='customer', verbose_name=_("Provider")
     )
 
+    class Meta:
+        verbose_name = 'Поставщик'
+        verbose_name_plural = 'Поставщики'
+
 
 class RetailNetwork(BaseModel):
     """ Розничная сеть """
     provider = models.ManyToManyField(
         Provider, **NULLABLE, on_delete=models.CASCADE, related_name='customer', verbose_name=_("Provider")
     )
+
+    class Meta:
+        verbose_name = 'Розничная сеть'
+        verbose_name_plural = 'Розничные сети'
